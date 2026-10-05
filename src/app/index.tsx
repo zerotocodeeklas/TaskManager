@@ -1,9 +1,20 @@
-import { StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 export default function HomeScreen() {
+  const [task, setTask]=useState("");
   return(
     <View style={style.container}>
       <Text style={style.title}> Task Manager </Text>
       <Text> My Tasks </Text>
+      <TextInput 
+      style={style.input}
+      placeholder="Enter a task..."
+      value={task}
+      onChangeText={setTask}
+      />
+      <Pressable>
+        <Text> Add Task </Text>
+      </Pressable>
     </View>
   );
 }
@@ -22,6 +33,14 @@ export default function HomeScreen() {
       color:"#80699B",
       fontSize:35,
       marginBottom:20,
+    },
+    input:{
+      borderWidth:1,
+      padding:10,
+      borderColor:"#80699B",
+      borderRadius:10,
+      width:250,
 
     },
+  
   });
