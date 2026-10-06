@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 export default function HomeScreen() {
   const [task, setTask]=useState("");
+  const [tasks,setTasks]=useState<string[]>([]);
   return(
     <View style={style.container}>
       <Text style={style.title}> Task Manager </Text>
@@ -12,9 +13,18 @@ export default function HomeScreen() {
       value={task}
       onChangeText={setTask}
       />
-      <Pressable>
+      <Pressable
+       onPress={()=>{
+        setTasks([...tasks,task]);
+        setTask("");
+      }}
+        >
         <Text> Add Task </Text>
       </Pressable>
+      {tasks.map((item)=>(
+        <Text>{item}</Text>
+      ))}
+
     </View>
   );
 }
