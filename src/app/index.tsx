@@ -14,15 +14,24 @@ export default function HomeScreen() {
       onChangeText={setTask}
       />
       <Pressable
+      style={style.button}
        onPress={()=>{
+        if(task !==""){
         setTasks([...tasks,task]);
         setTask("");
+        }
       }}
         >
-        <Text> Add Task </Text>
+        <Text style={style.buttonText}> Add Task </Text>
       </Pressable>
-      {tasks.map((item)=>(
-        <Text>{item}</Text>
+      {tasks.map((item ,index)=>(
+        <View key={index} style={style.taskItem}>
+          <Text>{item}</Text>
+
+          <Pressable>
+            <Text> Delete </Text>
+          </Pressable>
+          </View>
       ))}
 
     </View>
@@ -52,5 +61,21 @@ export default function HomeScreen() {
       width:250,
 
     },
+    taskItem:{
+      padding:10,
+      borderWidth:1,
+      borderColor:"#80699B",
+      borderRadius:10,
+      marginBottom:10,
+      width:250,
+    },
+    button:{
+      padding:10,
+      borderRadius:10,
+      backgroundColor:"#80699B",
+    },
+    buttonText:{
+      color:"white",
+    }
   
   });
