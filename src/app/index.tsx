@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 export default function HomeScreen() {
   const [task, setTask]=useState("");
-  const [tasks,setTasks]=useState<string[]>([]);
+  const [tasks,setTasks]=useState<{title:string ; completed:boolean}[]>([]);
   return(
     <View style={style.container}>
       <Text style={style.title}> Task Manager </Text>
@@ -17,7 +17,7 @@ export default function HomeScreen() {
       style={style.button}
        onPress={()=>{
         if(task !==""){
-        setTasks([...tasks,task]);
+        setTasks([...tasks,{title:task, completed:false}]);
         setTask("");
         }
       }}
@@ -26,10 +26,31 @@ export default function HomeScreen() {
       </Pressable>
       {tasks.map((item ,index)=>(
         <View key={index} style={style.taskItem}>
-          <Text>{item}</Text>
+          <Pressable
+          onPress={()=>{
+            const updatedTasks=tasks.map((item ,i) =>
+            i=== index
+          ?{... item,completed: !item.completed}
+          :item
+        );
+        setTasks(updatedTasks);
+          }}
+          >
+            <Text
+            style={{
+              textDecorationColor:item? 'line-through' :'none'
+            }}
+            >
+              {item.title}
+              </Text>
+          </Pressable>
 
-          <Pressable>
-            <Text> Delete </Text>
+          <Pressable
+          onPress={()=> {
+            setTasks(tasks.filter((_, i)=> i !== index));
+          }}
+          >
+            <Text style={style.deleteText}> Delete </Text>
           </Pressable>
           </View>
       ))}
@@ -76,6 +97,9 @@ export default function HomeScreen() {
     },
     buttonText:{
       color:"white",
-    }
+    },
+    deleteText:{
+      color:"#bb1c16",
+    },
   
   });
